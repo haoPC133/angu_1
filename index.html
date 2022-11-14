@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AJS_exam</title>
+
+        <!-- Link Boostrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+
+        <!-- Link Angular Framework -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+        <style>
+            tr.way th {
+                border: solid thin #000;
+                text-align: center;
+                padding: 4px 0;
+            }
+
+            tr.way th:hover {
+                background-color: #1fc90f;
+                cursor: pointer;
+            }
+
+            tr.way th a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body ng-app="myAPP" style="flex-basis: 10%">
+        <div class="container-fluid">
+
+            <!-- main content -->
+            <div ng-controller="mainCTR">
+                <table class="table" style="margin-top: 5px">
+                    <thead>
+                        <tr class="way">
+                            <th><a href="#/!">Home</a></th>
+                            <th><a href="#!course">Course List</a></th>
+                            <th><a href="#!add">Add New Course</a></th>
+                            <th><a href="#!about">About us</a></th>
+
+                        </tr>
+
+                    </thead>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- khoi hien thi cac trang muon link -->
+                        <div ng-view></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-include="'footer.html'"></div>
+        </div>
+
+        <script>
+            let app = angular.module("myAPP", ["ngRoute"]);
+            app.config(function ($routeProvider)
+            {
+                $routeProvider
+                    .when("/", {
+
+                    })
+                    .when("/course", {
+                        templateUrl: "listCourse.html"
+                    })
+                    .when("/add", {
+                        templateUrl: "addCourse.html"
+                    })
+                    .when("/about", {
+
+                    });
+            });
+
+            app.run(function ($rootScope, $http)
+            {
+                $rootScope.ds = [];
+
+                $http.get("course.json").then(function (r)
+                {
+                    $rootScope.ds = r.data.data_courses;
+                }
+                );
+            });
+
+
+            app.controller("mainCTR", function ($scope)
+            {
+
+            });
+
+            app.controller("myADD", function ($scope)
+            {
+
+                $scope.addCourse = function ()
+                {
+                    //tao ra 1 doi tuong json ten sv co cac thuoc tinh id,name,yob
+                    let course = {
+                        "id": $scope.ID,
+                        "name": $scope.name,
+                        "type": $scope.typ,
+                        "fee": $scope.fee
+                    };
+
+                    //dua doi tuong sv vo mang ds
+                    $scope.ds.push(course);
+
+                    //xuat thong bao thanh cong
+                    alert("Add New Course Succeed !");
+
+                }
+            });
+
+            app.controller("myLIST", function ($scope, $http)
+            {
+                $scope.remove = function (id)
+                {
+
+                    if (confirm("Are u sure ?"))
+                    {
+                        let index = -1;
+
+                        $scope.ds.forEach((course, i) =>
+                        {
+                            if (course.id == id)
+                            {
+                                console.log("found !");
+                                index = i;
+                            }
+                        });
+
+                        if (index >= 0)
+                        {
+                            $scope.ds.splice(index, 1);
+                        }
+                    }
+
+                }
+            });
+
+        </script>
+
+    </body>
+
+</html>

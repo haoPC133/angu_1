@@ -1,0 +1,75 @@
+<style>
+    .error {
+        color: red;
+    }
+
+    input.ng-invalid {
+        border: red thin solid;
+    }
+
+    input.ng-valid {
+        border: gray thin solid;
+    }
+
+    div.form-group input[type=text] {
+        width: 70%;
+    }
+
+    div.form-group label {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    button.btn {
+        margin-top: 15px;
+    }
+</style>
+
+<div class="container" ng-controller="myADD">
+    <h4>Add New Course</h4>
+    <hr>
+
+    <form name="formCourse" ng-submit="addCourse()">
+
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" id="courseID" name="courseID" ng-model="ID"
+                pattern="[A-Z]{1}[0-9]{2}" required>
+            <span class="error" ng-show="formCourse.courseID.$error.required">ID is required</span>
+            <br>
+            <span class="error" ng-show="formCourse.courseID.$invalid">ID has format Cxx, x:digit</span>
+
+        </div>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" id="courseName" name="courseName" ng-model="name" required>
+            <span class="error" ng-show="formCourse.courseName.$error.required">Name is required</span>
+        </div>
+
+        <div class="form-group">
+            <label for="typ" style="cursor:pointer; width: 45px">Type</label>
+
+            <p>
+                <input type="radio" style="cursor:pointer" id="typ_1" name="typ" ng-model="typ" ng-init="" value="LT">
+                <label for="typ_1" style="cursor: pointer">Long-term</label>
+
+                <input type="radio" style="cursor:pointer; margin-left:15px" id="typ_2" name="typ" ng-model="typ"
+                    value="ST" ng-checked="checked=true">
+                <label for="typ_2" style="cursor: pointer">Short-term</label>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label>Fee</label>
+            <input type="number" class="form-control" id="fee" name="fee" ng-model="fee" pattern="[0-9]{1,}" required>
+            <span class="error" ng-show="formCourse.fee.$error.required">Fee is required</span>
+            <br>
+            <span class="error" ng-show="formCourse.fee.$invalid">Invalid Fee (must be >= 100).</span>
+        </div>
+
+        <button type="submit" class="btn btn-info" ng-disabled="formCourse.$invalid">Add</button>
+
+    </form>
+
+</div>

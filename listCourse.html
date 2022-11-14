@@ -1,0 +1,57 @@
+<style>
+    input[type=radio] {
+        margin-right: 16px;
+    }
+</style>
+<h2>Course List</h2>
+<hr>
+
+<!-- main content -->
+<div ng-controller="myLIST">
+
+    <p>
+        <label style="margin-right: 10px; margin-bottom: 15px">Enter course name:</label>
+        <input type="text" name="man" id="man" ng-model="search.name">
+
+        <br>
+
+        <label for="sort" style="cursor: pointer; width:75px">Long-term</label>
+        <input type="radio" name="sort" id="sort" ng-model="sname" value="LT" style="cursor: pointer">
+
+        <label for="sort_1" style="cursor: pointer; width:79px">Short-term</label>
+        <input type="radio" name="sort_1" id="sort_1" ng-model="sname" value="ST" style="cursor: pointer">
+
+        <label for="sort_2" style="cursor: pointer; width:17px">All</label>
+        <input type="radio" name="sort_2" id="sort_2" ng-model="sname" style="cursor: pointer">
+    </p>
+
+
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Fee</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in ds | filter:search | filter:sname">
+                <td>{{$index+1}}</td>
+                <td>{{course.id}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.type}}</td>
+                <td>{{course.fee}}</td>
+                <td>
+                    <button type=" button" class="btn btn-success" ng-click="remove(course.id)"> Delete </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+</div>

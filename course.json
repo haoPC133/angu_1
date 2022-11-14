@@ -1,0 +1,28 @@
+{
+    "data_courses": [
+        {
+            "id": "C01",
+            "name": "Java Programming",
+            "type": "LT",
+            "fee": "500"
+        },
+        {
+            "id": "C02",
+            "name": "React Native + NodeJS",
+            "type": "LT",
+            "fee": "400"
+        },
+        {
+            "id": "C03",
+            "name": "Design a Simple Web with HTML5-CSS3",
+            "type": "ST",
+            "fee": "300"
+        },
+        {
+            "id": "C04",
+            "name": "UI/UX Principle",
+            "type": "ST",
+            "fee": "200"
+        }
+    ]
+}
